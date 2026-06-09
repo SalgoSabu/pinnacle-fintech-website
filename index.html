@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pinnacle Fintech Solutions — The Future of Trading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cyan:#00d4ff;
+  --purple:#7b61ff;
+  --blue:#4d9fff;
+  --white:#ffffff;
+  --black:#0a0e1a;
+  --navy:#0f1628;
+  --navy2:#131c35;
+  --muted:#2a3560;
+  --text-dim:#4a5a8a;
+  --text-mid:#8a9acc;
+  --border:#1e2d5a;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CUSTOM CURSOR */
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--cyan);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,background 0.2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1px solid var(--cyan);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.15s ease,width 0.2s,height 0.2s,opacity 0.2s;
+  opacity:0.4;
+}
+
+/* GRID OVERLAY */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  height:72px;
+  border-bottom:1px solid rgba(30,45,90,0.6);
+  backdrop-filter:blur(20px);
+  background:rgba(10,14,26,0.8);
+}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-icon{width:36px;height:36px;position:relative}
+.logo-icon svg{width:100%;height:100%}
+.logo-text{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;color:var(--white)}
+.logo-sub{font-size:8px;letter-spacing:3px;color:var(--cyan);font-family:'Space Mono',monospace;display:block;margin-top:1px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:2px;color:var(--text-mid);
+  text-decoration:none;text-transform:uppercase;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--cyan);
+  transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--cyan)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:2px;padding:10px 24px;
+  border:1px solid var(--cyan);color:var(--cyan);
+  background:transparent;cursor:none;
+  text-transform:uppercase;text-decoration:none;
+  transition:background 0.2s,color 0.2s;
+}
+.nav-cta:hover{background:var(--cyan);color:var(--black)}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:140px 8% 80px;
+  position:relative;overflow:hidden;
+}
+.hero-grid-label{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:4px;color:var(--text-dim);
+  margin-bottom:32px;display:flex;align-items:center;gap:12px;
+}
+.hero-grid-label::before{
+  content:'';display:block;width:40px;height:1px;background:var(--cyan);
+}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,7vw,96px);
+  font-weight:800;line-height:0.95;
+  letter-spacing:-2px;
+  margin-bottom:32px;
+  max-width:800px;
+}
+.hero h1 .line1{display:block;color:var(--white)}
+.hero h1 .line2{display:block;color:transparent;
+  -webkit-text-stroke:1px var(--cyan);
+}
+.hero h1 .line3{display:block;color:var(--cyan)}
+.hero-desc{
+  font-size:16px;line-height:1.8;color:var(--text-mid);
+  max-width:480px;margin-bottom:52px;font-weight:300;
+}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn-primary{
+  font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:2px;padding:16px 36px;
+  background:var(--cyan);color:var(--black);
+  border:none;cursor:none;text-transform:uppercase;
+  text-decoration:none;font-weight:700;
+  transition:transform 0.2s,box-shadow 0.2s;
+  display:inline-block;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,0.3)}
+.btn-outline{
+  font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:2px;padding:16px 36px;
+  background:transparent;color:var(--white);
+  border:1px solid var(--border);cursor:none;
+  text-transform:uppercase;text-decoration:none;
+  transition:border-color 0.2s,color 0.2s;
+  display:inline-block;
+}
+.btn-outline:hover{border-color:var(--white);color:var(--cyan)}
+
+/* Hero orb */
+.hero-orb{
+  position:absolute;right:-10%;top:50%;
+  transform:translateY(-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(123,97,255,0.12) 0%,rgba(0,212,255,0.06) 40%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-orb2{
+  position:absolute;left:20%;bottom:-20%;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(0,212,255,0.06) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+
+/* TICKER */
+.ticker-bar{
+  background:var(--navy);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:14px 0;overflow:hidden;
+  position:relative;
+}
+.ticker-track{
+  display:flex;gap:0;
+  animation:ticker 30s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  font-family:'Space Mono',monospace;font-size:11px;
+  color:var(--text-dim);letter-spacing:2px;
+  padding:0 40px;display:flex;align-items:center;gap:10px;
+}
+.ticker-item span{color:var(--cyan)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* STATS */
+.stats-section{
+  padding:100px 8%;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);
+}
+.stat-box{
+  background:var(--black);padding:48px 32px;
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+}
+.stat-box:hover{background:var(--navy)}
+.stat-box::before{
+  content:'';position:absolute;top:0;left:0;
+  width:2px;height:0;background:var(--cyan);
+  transition:height 0.4s;
+}
+.stat-box:hover::before{height:100%}
+.stat-num{
+  font-family:'Syne',sans-serif;font-size:52px;
+  font-weight:800;color:var(--white);
+  line-height:1;margin-bottom:8px;
+}
+.stat-num span{color:var(--cyan)}
+.stat-label{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:3px;color:var(--text-dim);
+  text-transform:uppercase;
+}
+
+/* SECTION HEADER */
+.section-header{padding:100px 8% 60px;position:relative}
+.section-tag{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:4px;color:var(--cyan);
+  margin-bottom:20px;display:flex;align-items:center;gap:12px;
+}
+.section-tag::before{content:'//';color:var(--purple);margin-right:4px}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,4vw,56px);
+  font-weight:800;line-height:1.05;
+  letter-spacing:-1px;max-width:600px;
+}
+.section-title em{font-style:normal;color:var(--cyan)}
+
+/* PRODUCTS */
+.products-grid{
+  padding:0 8% 100px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);
+}
+.product-card{
+  background:var(--black);padding:48px 40px;
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+  cursor:none;
+}
+.product-card:hover{background:var(--navy2)}
+.product-card.featured{background:var(--navy);grid-column:span 1}
+.product-status{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:3px;padding:5px 12px;
+  border:1px solid;display:inline-block;
+  margin-bottom:32px;text-transform:uppercase;
+}
+.product-status.live{color:var(--cyan);border-color:var(--cyan)}
+.product-status.dev{color:var(--purple);border-color:var(--purple)}
+.product-status.soon{color:var(--text-dim);border-color:var(--border)}
+.product-icon{
+  width:56px;height:56px;margin-bottom:24px;
+}
+.product-name{
+  font-family:'Syne',sans-serif;font-size:22px;
+  font-weight:700;margin-bottom:8px;color:var(--white);
+}
+.product-tagline{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--cyan);letter-spacing:2px;margin-bottom:20px;
+}
+.product-desc{
+  font-size:14px;line-height:1.8;color:var(--text-mid);
+  margin-bottom:32px;
+}
+.product-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:1px;padding:4px 10px;
+  background:var(--muted);color:var(--text-mid);
+}
+.product-arrow{
+  position:absolute;bottom:40px;right:40px;
+  font-size:24px;color:var(--border);
+  transition:color 0.2s,transform 0.2s;
+}
+.product-card:hover .product-arrow{color:var(--cyan);transform:translate(4px,-4px)}
+
+/* VISION */
+.vision-section{
+  padding:100px 8%;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;
+}
+.vision-text .section-tag{margin-bottom:20px}
+.vision-text h2{
+  font-family:'Syne',sans-serif;font-size:clamp(32px,3.5vw,48px);
+  font-weight:800;line-height:1.1;margin-bottom:32px;
+}
+.vision-text p{
+  font-size:15px;line-height:1.9;color:var(--text-mid);
+  margin-bottom:20px;
+}
+.vision-pillars{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.pillar{
+  background:var(--black);padding:28px 32px;
+  display:flex;align-items:flex-start;gap:20px;
+  transition:background 0.2s;
+}
+.pillar:hover{background:var(--navy)}
+.pillar-num{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--cyan);letter-spacing:2px;min-width:32px;
+  padding-top:2px;
+}
+.pillar-title{
+  font-family:'Syne',sans-serif;font-size:16px;
+  font-weight:600;margin-bottom:6px;
+}
+.pillar-desc{font-size:13px;color:var(--text-mid);line-height:1.7}
+
+/* TEAM */
+.team-section{padding:0 8% 100px}
+.team-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--border);margin-top:60px;
+}
+.team-card{
+  background:var(--black);padding:48px 40px;
+  position:relative;
+}
+.team-avatar{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--navy2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:700;
+  color:var(--cyan);margin-bottom:24px;
+}
+.team-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.team-role{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--cyan);letter-spacing:2px;margin-bottom:16px;
+}
+.team-bio{font-size:13px;color:var(--text-mid);line-height:1.8}
+.team-card.placeholder .team-avatar{color:var(--muted);border-color:var(--muted)}
+.team-card.placeholder .team-name{color:var(--muted)}
+.team-card.placeholder .team-role{color:var(--muted)}
+.hiring-badge{
+  position:absolute;top:40px;right:40px;
+  font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:2px;color:var(--purple);
+  border:1px solid var(--purple);padding:4px 10px;
+}
+
+/* CONTACT */
+.contact-section{
+  padding:100px 8%;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:start;
+}
+.contact-info .section-tag{margin-bottom:20px}
+.contact-info h2{
+  font-family:'Syne',sans-serif;font-size:clamp(32px,3.5vw,48px);
+  font-weight:800;line-height:1.1;margin-bottom:32px;
+}
+.contact-info p{font-size:15px;line-height:1.9;color:var(--text-mid);margin-bottom:40px}
+.contact-details{display:flex;flex-direction:column;gap:20px}
+.contact-item{
+  display:flex;align-items:center;gap:16px;
+  font-family:'Space Mono',monospace;font-size:12px;
+  color:var(--text-mid);
+}
+.contact-item-icon{
+  width:40px;height:40px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-size:16px;flex-shrink:0;
+}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-label{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;
+}
+.form-input{
+  background:var(--navy);border:1px solid var(--border);
+  color:var(--white);padding:14px 16px;
+  font-family:'Inter',sans-serif;font-size:14px;
+  outline:none;transition:border-color 0.2s;
+  width:100%;
+}
+.form-input:focus{border-color:var(--cyan)}
+.form-input::placeholder{color:var(--text-dim)}
+textarea.form-input{resize:vertical;min-height:120px}
+.form-select{
+  background:var(--navy);border:1px solid var(--border);
+  color:var(--white);padding:14px 16px;
+  font-family:'Inter',sans-serif;font-size:14px;
+  outline:none;width:100%;cursor:none;
+  -webkit-appearance:none;
+}
+.btn-submit{
+  font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:2px;padding:16px 36px;
+  background:var(--cyan);color:var(--black);
+  border:none;cursor:none;text-transform:uppercase;
+  font-weight:700;margin-top:8px;align-self:flex-start;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,212,255,0.3)}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:60px 8%;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px;
+}
+.footer-brand .logo-text{font-size:16px;margin-bottom:6px}
+.footer-brand p{font-size:13px;color:var(--text-dim);line-height:1.8;margin-top:16px;max-width:260px}
+.footer-col h4{
+  font-family:'Space Mono',monospace;font-size:10px;
+  letter-spacing:3px;color:var(--text-dim);
+  text-transform:uppercase;margin-bottom:20px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col a{
+  font-size:13px;color:var(--text-mid);text-decoration:none;
+  transition:color 0.2s;
+}
+.footer-col a:hover{color:var(--cyan)}
+.footer-bottom{
+  border-top:1px solid var(--border);
+  padding:24px 8%;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-bottom p{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:var(--text-dim);letter-spacing:1px;
+}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* SCANLINE EFFECT */
+.scanline{
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);
+}
+
+@media(max-width:900px){
+  .stats-section,.products-grid,.team-grid{grid-template-columns:1fr 1fr}
+  .vision-section,.contact-section{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .stats-section,.products-grid,.team-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="20" width="6" height="14" rx="2" fill="#7b61ff"/>
+        <rect x="8" y="12" width="6" height="22" rx="2" fill="#4d9fff"/>
+        <rect x="16" y="2" width="7" height="32" rx="2" fill="#00d4ff"/>
+        <rect x="25" y="12" width="6" height="22" rx="2" fill="#4d9fff"/>
+        <rect x="33" y="20" width="3" height="14" rx="1" fill="#7b61ff"/>
+        <path d="M3,17 L11,9 L19.5,1 L28,9 L35,17" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="19.5" cy="1" r="2" fill="white"/>
+      </svg>
+    </div>
+    <div>
+      <span class="logo-text">PINNACLE</span>
+      <span class="logo-sub">FINTECH SOLUTIONS</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-grid-label">Pinnacle Fintech Solutions — Abu Dhabi, UAE</div>
+  <h1>
+    <span class="line1 reveal">Building the</span>
+    <span class="line2 reveal">Infrastructure</span>
+    <span class="line3 reveal">of Trading.</span>
+  </h1>
+  <p class="hero-desc reveal">
+    We build next-generation fintech products that transform how traders learn, compete, and perform — from gamified trading platforms to enterprise-grade automation tools.
+  </p>
+  <div class="hero-actions reveal">
+    <a href="#products" class="btn-primary">Explore Products</a>
+    <a href="#vision" class="btn-outline">Our Vision</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span class="ticker-item">NEXUS TRADE APP <span>LIVE</span></span>
+    <span class="ticker-item">AUTOMATED TRADING SYSTEMS <span>IN DEV</span></span>
+    <span class="ticker-item">PINE SCRIPT INDICATORS <span>IN DEV</span></span>
+    <span class="ticker-item">MT4 / MT5 EXPERT ADVISORS <span>COMING SOON</span></span>
+    <span class="ticker-item">PROP FIRM EVALUATION TOOLS <span>COMING SOON</span></span>
+    <span class="ticker-item">AI TRADING COACH <span>IN DEV</span></span>
+    <span class="ticker-item">NEXUS TRADE APP <span>LIVE</span></span>
+    <span class="ticker-item">AUTOMATED TRADING SYSTEMS <span>IN DEV</span></span>
+    <span class="ticker-item">PINE SCRIPT INDICATORS <span>IN DEV</span></span>
+    <span class="ticker-item">MT4 / MT5 EXPERT ADVISORS <span>COMING SOON</span></span>
+    <span class="ticker-item">PROP FIRM EVALUATION TOOLS <span>COMING SOON</span></span>
+    <span class="ticker-item">AI TRADING COACH <span>IN DEV</span></span>
+  </div>
+</div>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stat-box reveal">
+    <div class="stat-num">7<span>+</span></div>
+    <div class="stat-label">Years Trading Experience</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num">5<span>+</span></div>
+    <div class="stat-label">Products in Pipeline</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num">50<span>L</span></div>
+    <div class="stat-label">Level Campaign — Nexus App</div>
+  </div>
+  <div class="stat-box reveal">
+    <div class="stat-num"><span>∞</span></div>
+    <div class="stat-label">Commitment to Traders</div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<div class="section-header reveal">
+  <div class="section-tag">Our Products</div>
+  <h2 class="section-title">Built by traders, <em>for traders.</em></h2>
+</div>
+<div class="products-grid">
+
+  <div class="product-card featured reveal">
+    <span class="product-status live">● Live</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <rect x="4" y="26" width="8" height="22" rx="2" fill="#7b61ff" opacity="0.7"/>
+        <rect x="16" y="16" width="8" height="32" rx="2" fill="#4d9fff" opacity="0.8"/>
+        <rect x="28" y="4" width="10" height="44" rx="2" fill="#00d4ff"/>
+        <rect x="42" y="16" width="8" height="32" rx="2" fill="#4d9fff" opacity="0.8"/>
+        <path d="M8,22 L20,12 L33,2 L46,12" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="33" cy="2" r="3" fill="white"/>
+      </svg>
+    </div>
+    <div class="product-name">Nexus Trade App</div>
+    <div class="product-tagline">Trade Wars: Neon Protocol</div>
+    <p class="product-desc">The world's first gamified professional trading platform. Real trading performance drives game stats — your win rate becomes your attack power, your drawdown becomes your HP. 50-level campaign from The Slums to The Void Citadel.</p>
+    <div class="product-tags">
+      <span class="tag">React + Vite</span>
+      <span class="tag">Supabase</span>
+      <span class="tag">TwelveData</span>
+      <span class="tag">Virtual Trading</span>
+      <span class="tag">AI Coaching</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+  <div class="product-card reveal">
+    <span class="product-status dev">◈ In Development</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <rect x="8" y="8" width="40" height="40" rx="4" fill="none" stroke="#7b61ff" stroke-width="1.5"/>
+        <path d="M18 28 L26 20 L34 28 L42 20" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="18" cy="28" r="3" fill="#7b61ff"/>
+        <circle cx="26" cy="20" r="3" fill="#00d4ff"/>
+        <circle cx="34" cy="28" r="3" fill="#7b61ff"/>
+        <circle cx="42" cy="20" r="3" fill="#00d4ff"/>
+      </svg>
+    </div>
+    <div class="product-name">Expert Advisors</div>
+    <div class="product-tagline">MT4 / MT5 Automation</div>
+    <p class="product-desc">Professional-grade automated trading systems for MetaTrader platforms. Risk-managed, backtested, and built for real trading conditions across Forex, Gold, and Indices.</p>
+    <div class="product-tags">
+      <span class="tag">MQL4/5</span>
+      <span class="tag">MT4</span>
+      <span class="tag">MT5</span>
+      <span class="tag">Backtested</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+  <div class="product-card reveal">
+    <span class="product-status dev">◈ In Development</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <path d="M8 40 L20 24 L28 32 L38 16 L48 20" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        <rect x="6" y="38" width="8" height="12" rx="1" fill="#7b61ff" opacity="0.6"/>
+        <rect x="18" y="28" width="8" height="22" rx="1" fill="#4d9fff" opacity="0.7"/>
+        <rect x="30" y="18" width="8" height="32" rx="1" fill="#00d4ff" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="product-name">Trading Indicators</div>
+    <div class="product-tagline">Pine Script / TradingView</div>
+    <p class="product-desc">Advanced technical indicators built in Pine Script v6 for TradingView. Multi-timeframe dashboards, momentum systems, and pattern detection tools for serious traders.</p>
+    <div class="product-tags">
+      <span class="tag">Pine Script v6</span>
+      <span class="tag">TradingView</span>
+      <span class="tag">MTF</span>
+      <span class="tag">Momentum</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+  <div class="product-card reveal">
+    <span class="product-status soon">○ Coming Soon</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="20" fill="none" stroke="#1e2d5a" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="12" fill="none" stroke="#7b61ff" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <circle cx="28" cy="28" r="4" fill="#00d4ff"/>
+        <line x1="28" y1="8" x2="28" y2="16" stroke="#00d4ff" stroke-width="1.5"/>
+        <line x1="28" y1="40" x2="28" y2="48" stroke="#00d4ff" stroke-width="1.5"/>
+        <line x1="8" y1="28" x2="16" y2="28" stroke="#7b61ff" stroke-width="1.5"/>
+        <line x1="40" y1="28" x2="48" y2="28" stroke="#7b61ff" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="product-name">Prop Firm Tools</div>
+    <div class="product-tagline">Evaluation Suite</div>
+    <p class="product-desc">A complete toolkit for prop firm evaluation preparation. Risk calculators, drawdown monitors, compliance dashboards, and performance trackers built around FTMO and similar firm rules.</p>
+    <div class="product-tags">
+      <span class="tag">FTMO</span>
+      <span class="tag">Risk Calc</span>
+      <span class="tag">Dashboard</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+  <div class="product-card reveal">
+    <span class="product-status soon">○ Coming Soon</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <rect x="10" y="14" width="36" height="28" rx="4" fill="none" stroke="#1e2d5a" stroke-width="1.5"/>
+        <path d="M18 28 Q22 20 28 26 Q34 32 38 24" stroke="#00d4ff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <circle cx="28" cy="8" r="4" fill="#7b61ff"/>
+        <line x1="28" y1="12" x2="28" y2="14" stroke="#7b61ff" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="product-name">AI Trade Coach</div>
+    <div class="product-tagline">Intelligent Analysis</div>
+    <p class="product-desc">An AI-powered coaching system that analyses your trade history, identifies patterns in your mistakes, and gives actionable feedback to accelerate your growth as a trader.</p>
+    <div class="product-tags">
+      <span class="tag">Claude API</span>
+      <span class="tag">Pattern Detection</span>
+      <span class="tag">Feedback</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+  <div class="product-card reveal">
+    <span class="product-status soon">○ Coming Soon</span>
+    <div class="product-icon">
+      <svg viewBox="0 0 56 56" fill="none">
+        <polygon points="28,6 52,20 52,36 28,50 4,36 4,20" fill="none" stroke="#7b61ff" stroke-width="1.5"/>
+        <polygon points="28,14 44,23 44,33 28,42 12,33 12,23" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.5"/>
+        <text x="28" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff" font-family="sans-serif">₿</text>
+      </svg>
+    </div>
+    <div class="product-name">Trading Analytics</div>
+    <div class="product-tagline">Portfolio Intelligence</div>
+    <p class="product-desc">Deep analytics platform for serious traders. Performance breakdowns by session, asset, strategy, and time. Identify your edge with data you've never seen before.</p>
+    <div class="product-tags">
+      <span class="tag">Analytics</span>
+      <span class="tag">Portfolio</span>
+      <span class="tag">Reporting</span>
+    </div>
+    <div class="product-arrow">↗</div>
+  </div>
+
+</div>
+
+<!-- VISION -->
+<section class="vision-section" id="vision">
+  <div class="vision-text">
+    <div class="section-tag reveal">Our Vision</div>
+    <h2 class="reveal">We don't build <em>tools.</em><br/>We build <em>edges.</em></h2>
+    <p class="reveal">Most traders fail not because they lack intelligence — but because they lack the right infrastructure. No feedback loops. No gamification. No system that rewards discipline over luck.</p>
+    <p class="reveal">Pinnacle Fintech Solutions exists to change that. Every product we build gives traders an unfair advantage — through better data, better psychology tools, and better automation.</p>
+    <p class="reveal">We are building the operating system for the modern trader.</p>
+  </div>
+  <div class="vision-pillars reveal">
+    <div class="pillar">
+      <span class="pillar-num">01</span>
+      <div>
+        <div class="pillar-title">Gamification</div>
+        <p class="pillar-desc">Making discipline rewarding through game mechanics tied to real performance</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">02</span>
+      <div>
+        <div class="pillar-title">Automation</div>
+        <p class="pillar-desc">Removing emotion from execution through intelligent systems</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">03</span>
+      <div>
+        <div class="pillar-title">Intelligence</div>
+        <p class="pillar-desc">AI-powered insights that expose patterns human analysis misses</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">04</span>
+      <div>
+        <div class="pillar-title">Accessibility</div>
+        <p class="pillar-desc">Professional-grade tools built for every level of trader</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <span class="pillar-num">05</span>
+      <div>
+        <div class="pillar-title">Community</div>
+        <p class="pillar-desc">A network of disciplined traders competing, learning, and growing together</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="section-header reveal" style="padding:0 0 0 0">
+    <div class="section-tag">The Team</div>
+    <h2 class="section-title">Traders who <em>build.</em></h2>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar">KS</div>
+      <div class="team-name">Kariyil Salgo Sabu</div>
+      <div class="team-role">Founder & CEO</div>
+      <p class="team-bio">7+ years trading Forex, Stocks, Commodities, Futures and Options. Builder of Pinnacle's entire product suite. Based in Abu Dhabi, UAE.</p>
+    </div>
+    <div class="team-card placeholder reveal">
+      <div class="team-avatar" style="font-size:28px">+</div>
+      <div class="team-name">CTO / Co-Founder</div>
+      <div class="team-role">Position Open</div>
+      <p class="team-bio">Looking for a technical co-founder with experience in fintech infrastructure, React, and backend systems.</p>
+      <span class="hiring-badge">Hiring</span>
+    </div>
+    <div class="team-card placeholder reveal">
+      <div class="team-avatar" style="font-size:28px">+</div>
+      <div class="team-name">Head of Growth</div>
+      <div class="team-role">Position Open</div>
+      <p class="team-bio">Seeking a growth specialist with deep experience in the retail trading and fintech space.</p>
+      <span class="hiring-badge">Hiring</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-info">
+    <div class="section-tag reveal">Contact</div>
+    <h2 class="reveal">Let's build the future <em>together.</em></h2>
+    <p class="reveal">Whether you're an investor, potential partner, talented developer, or just a trader who wants early access — we want to hear from you.</p>
+    <div class="contact-details reveal">
+      <div class="contact-item">
+        <div class="contact-item-icon">@</div>
+        algorithmictrader1995@gmail.com
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">⊕</div>
+        pinnaclefintech.io
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">◈</div>
+        Abu Dhabi, UAE — Sharjah Free Zone (Registering)
+      </div>
+    </div>
+  </div>
+  <div class="contact-form reveal">
+    <div class="form-group">
+      <label class="form-label">Your Name</label>
+      <input type="text" class="form-input" placeholder="John Doe"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" placeholder="john@example.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Inquiry Type</label>
+      <select class="form-select">
+        <option>Investment Inquiry</option>
+        <option>Partnership</option>
+        <option>Early Access</option>
+        <option>Career Opportunity</option>
+        <option>General</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-input" placeholder="Tell us about yourself and what you're looking for..."></textarea>
+    </div>
+    <button class="btn-submit">Send Message →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo" style="margin-bottom:4px">
+      <div class="logo-icon" style="width:28px;height:28px">
+        <svg viewBox="0 0 36 36" fill="none">
+          <rect x="0" y="20" width="6" height="14" rx="2" fill="#7b61ff"/>
+          <rect x="8" y="12" width="6" height="22" rx="2" fill="#4d9fff"/>
+          <rect x="16" y="2" width="7" height="32" rx="2" fill="#00d4ff"/>
+          <rect x="25" y="12" width="6" height="22" rx="2" fill="#4d9fff"/>
+          <path d="M3,17 L11,9 L19.5,1 L28,9" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <circle cx="19.5" cy="1" r="2" fill="white"/>
+        </svg>
+      </div>
+      <div>
+        <span class="logo-text" style="font-size:13px">PINNACLE</span>
+        <span class="logo-sub">FINTECH SOLUTIONS</span>
+      </div>
+    </div>
+    <p>Building the infrastructure of trading. Abu Dhabi, UAE.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Products</h4>
+    <ul>
+      <li><a href="#">Nexus Trade App</a></li>
+      <li><a href="#">Expert Advisors</a></li>
+      <li><a href="#">Trading Indicators</a></li>
+      <li><a href="#">Prop Firm Tools</a></li>
+      <li><a href="#">AI Trade Coach</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Company</h4>
+    <ul>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Invest</a></li>
+      <li><a href="#contact">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 Pinnacle Fintech Solutions. All rights reserved.</p>
+  <p>pinnaclefintech.io</p>
+</div>
+
+<script>
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+function animRing(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}
+animRing();
+document.querySelectorAll('a,button,.product-card,.stat-box,.pillar,.team-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='56px';ring.style.height='56px';ring.style.opacity='0.8';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.4';});
+});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
